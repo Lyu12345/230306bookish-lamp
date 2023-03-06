@@ -51,7 +51,7 @@ class App {
 
     _loadModel() {
         const RobotArms = new GLTFLoader();
-        let arm1, arm2, arm3, arm4, hand01, hand11L, hand11R, hand12L, hand12R, hand21L, hand21R;
+        let arm1, arm2, arm3, arm4, hand01, hand11L, hand11R, hand12L, hand12R, hand21L, hand21R, armLed;
 
         const arm1Pos = { x: 0, y: 0, z: 0 };
         const arm2Pos = { x: 0, y: 5, z: 0 };
@@ -82,6 +82,8 @@ class App {
                     child.castShadow = true;
                 }
             });
+        }, undefined, (error) => {
+            console.error(`Failed to load GLTF file: ${error}`);
         });
 
 
@@ -98,14 +100,17 @@ class App {
                     child.castShadow = true;
                 }
             });
+        }, undefined, (error) => {
+            console.error(`Failed to load GLTF file: ${error}`);
         });
+
 
         RobotArms.load('./assets/arm3.gltf', (gltf) => {
             arm3 = gltf.scene;
             arm3.position.set(arm3Pos.x, arm3Pos.y, arm3Pos.z);
             setTimeout(() => {
                 arm2.add(arm3);
-            }, 200);
+            }, 500);
             this.arm3 = arm3;
             arm3.traverse((child) => {
                 if (child.isMesh) {
@@ -113,14 +118,17 @@ class App {
                     child.castShadow = true;
                 }
             });
+        }, undefined, (error) => {
+            console.error(`Failed to load GLTF file: ${error}`);
         });
+
 
         RobotArms.load('./assets/arm4.gltf', (gltf) => {
             arm4 = gltf.scene;
             arm4.position.set(arm4Pos.x, arm4Pos.y, arm4Pos.z);
             setTimeout(() => {
                 arm3.add(arm4);
-            }, 200);
+            }, 500);
             this.arm4 = arm4;
             arm4.traverse((child) => {
                 if (child.isMesh) {
@@ -128,7 +136,25 @@ class App {
                     child.castShadow = true;
                 }
             });
+        }, undefined, (error) => {
+            console.error(`Failed to load GLTF file: ${error}`);
         });
+
+        RobotArms.load('./assets/arm4-1.gltf', (gltf) => {
+            armLed = gltf.scene;
+            // armLed.position.set(0,0,0);
+            setTimeout(() => {
+                arm4.add(armLed);
+            }, 500);
+            this.armLed = armLed;
+            armLed.traverse((child) => {
+                if (child.isMesh) {
+                    child.material.emissive = new THREE.Color("white"); // #led set red emission
+                    // child.material.emissiveIntensity = 1; // adjust the intensity
+                }
+            });
+        });
+
 
         RobotArms.load('./assets/hand01.gltf', (gltf) => {
             hand01 = gltf.scene;
@@ -144,14 +170,17 @@ class App {
                 }
             });
 
+        }, undefined, (error) => {
+            console.error(`Failed to load GLTF file: ${error}`);
         });
+
 
         RobotArms.load('./assets/hand11L.gltf', (gltf) => {
             hand11L = gltf.scene;
             hand11L.position.set(hand11LPos.x, hand11LPos.y, hand11LPos.z);
             setTimeout(() => {
                 hand01.add(hand11L);
-            }, 200);
+            }, 500);
             this.hand11L = hand11L;
             hand11L.traverse((child) => {
                 if (child.isMesh) {
@@ -166,7 +195,7 @@ class App {
             hand11R.position.set(hand11RPos.x, hand11RPos.y, hand11RPos.z);
             setTimeout(() => {
                 hand01.add(hand11R);
-            }, 200);
+            }, 500);
             this.hand11R = hand11R;
             hand11R.traverse((child) => {
                 if (child.isMesh) {
@@ -181,7 +210,7 @@ class App {
             hand12L.position.set(hand12LPos.x, hand12LPos.y, hand12LPos.z);
             setTimeout(() => {
                 hand01.add(hand12L);
-            }, 200);
+            }, 500);
             this.hand12L = hand12L;
         });
 
@@ -190,7 +219,7 @@ class App {
             hand12R.position.set(hand12RPos.x, hand12RPos.y, hand12RPos.z);
             setTimeout(() => {
                 hand01.add(hand12R);
-            }, 200);
+            }, 500);
             this.hand12R = hand12R;
         });
 
@@ -199,7 +228,7 @@ class App {
             hand21L.position.set(hand21LPos.x, hand21LPos.y, hand21LPos.z);
             setTimeout(() => {
                 hand11L.add(hand21L);
-            }, 200);
+            }, 500);
             this.hand21L = hand21L;
             hand21L.traverse((child) => {
                 if (child.isMesh) {
@@ -215,7 +244,7 @@ class App {
             hand21R.position.set(hand21RPos.x, hand21RPos.y, hand21RPos.z);
             setTimeout(() => {
                 hand11R.add(hand21R);
-            }, 200);
+            }, 500);
             this.hand21R = hand21R;
             hand21R.traverse((child) => {
                 if (child.isMesh) {
@@ -348,7 +377,6 @@ class App {
         }, undefined, (error) => {
             console.error(`Failed to load HDR file: ${error}`);
         });
-
 
         const flatformscale = { x: 30, y: 1, z: 30 };
         const position = { x: 0, y: -flatformscale.y / 2, z: 0 };
