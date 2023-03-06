@@ -279,55 +279,52 @@ class App {
             .name('Refresh')
             .domElement.style.marginLeft = '20px';
 
-        gui.add(this.arm1Rot, 'y', -Math.PI / 2, Math.PI / 2, 0.1).name('arm1 Y').onChange(() => {
+        gui.add(this.arm1Rot, 'y', 0, 180, 1).name('arm1 Y').onChange(() => {
             // sound1.play();
             if (this.arm1) {
-                this.arm1.rotation.y = this.arm1Rot.y;
+                this.arm1.rotation.y = (this.arm1Rot.y - 90) * Math.PI / 180;
             }
-        });
+        }).setValue(90);
 
-        gui.add(this.arm2Rot, 'x', -Math.PI / 2, Math.PI / 2, 0.1).name('arm2 X').onChange(() => {
-            // sound2.play();
+        gui.add(this.arm2Rot, 'x', 0, 180, 1).name('arm2 X').onChange(() => {
             if (this.arm2) {
-                this.arm2.rotation.x = this.arm2Rot.x;
+                this.arm2.rotation.x = (this.arm2Rot.x - 90) * Math.PI / 180;
             }
-        });
+        }).setValue(90); // Set default value to 90 degrees
 
 
-        gui.add(this.arm3Rot, 'x', -Math.PI / 2, Math.PI / 2, 0.1).name('arm3 X').onChange(() => {
-            // sound3.play();
+        gui.add(this.arm3Rot, 'x', 0, 180, 1).name('arm3 X').onChange(() => {
             if (this.arm3) {
-                this.arm3.rotation.x = this.arm3Rot.x;
+                this.arm3.rotation.x = (this.arm3Rot.x - 90) * Math.PI / 180;
             }
-        });
+        }).setValue(90); // Set default value to 90 degrees
 
-
-        gui.add(this.arm4Rot, 'x', -Math.PI / 2, Math.PI / 2, 0.1).name('arm4 X').onChange(() => {
-            // sound4.play();
+        gui.add(this.arm4Rot, 'x', 0, 180, 1).name('arm4 X').onChange(() => {
             if (this.arm4) {
-                this.arm4.rotation.x = this.arm4Rot.x;
+                this.arm4.rotation.x = (this.arm4Rot.x - 90) * Math.PI / 180;
             }
-        });
-
-
-        gui.add(this.hand01Rot, 'y', -Math.PI / 2, Math.PI / 2, 0.1).name('hand5 Y').onChange(() => {
+        }).setValue(90); // Set default value to 90 degrees
+        
+        
+        gui.add(this.hand01Rot, 'y', 0, 180, 1).name('hand5 Y').onChange(() => {
             // sound5.play();
             if (this.hand01) {
-                this.hand01.rotation.y = this.hand01Rot.y;
+                this.hand01.rotation.y = (this.hand01Rot.y - 90) * Math.PI / 180;
             }
-        });
+        }).setValue(90);
 
-        gui.add(this.hand11LRot, 'z', 0, 1.3, 0.1).name('hand Grab').onChange(() => {
+        gui.add(this.hand11LRot, 'z', 0, 180, 1).name('hand Grab').onChange(() => {
             // sound6.play();
             if (this.hand11L) {
-                this.hand11L.rotation.z = this.hand11LRot.z;
-                this.hand11R.rotation.z = -this.hand11LRot.z;
-                this.hand12L.rotation.z = this.hand11LRot.z;
-                this.hand12R.rotation.z = -this.hand11LRot.z;
-                this.hand21L.rotation.z = -this.hand11LRot.z;
-                this.hand21R.rotation.z = this.hand11LRot.z;
+                this.hand11L.rotation.z = -(this.hand11LRot.z/2 -90) * Math.PI / 180;
+                this.hand11R.rotation.z = -this.hand11L.rotation.z;
+                this.hand12L.rotation.z = this.hand11L.rotation.z;
+                this.hand12R.rotation.z = -this.hand11L.rotation.z;
+                this.hand21L.rotation.z = -this.hand11L.rotation.z;
+                this.hand21R.rotation.z = this.hand11L.rotation.z;
+
             }
-        });
+        }).setValue(180);
     }
 
     _setupModel() {
